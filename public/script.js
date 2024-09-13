@@ -4,6 +4,7 @@ const sendButton = document.getElementById('send');
 const messageInput = document.getElementById('message');
 const themeToggle = document.getElementById('theme-toggle');
 const statusBar = document.getElementById('status-bar');
+const notificationSound = document.getElementById('notification-sound'); // Referencia al sonido
 
 // Toggle de modo oscuro/claro
 themeToggle.addEventListener('click', () => {
@@ -20,6 +21,9 @@ ws.onmessage = (event) => {
   const li = document.createElement('li');
   li.textContent = event.data;
   messageList.appendChild(li);
+
+  // Reproducir el sonido de notificación cuando llegue un mensaje nuevo
+  notificationSound.play();
 };
 
 ws.onclose = () => {
