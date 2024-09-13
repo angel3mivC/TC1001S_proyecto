@@ -1,8 +1,4 @@
 const mqtt = require('mqtt');
-const WebSocket = require('ws');
-
-// Conectar al WebSocket en el servidor
-const ws = new WebSocket('ws://localhost:3000');
 
 // Configuración MQTT
 const protocol = 'mqtt';
@@ -22,7 +18,6 @@ const client = mqtt.connect(connectUrl, {
 
 const topic = '/nodejs/mqtt';
 
-// Suscripción y Publicación en MQTT
 client.on('connect', () => {
   console.log('MQTT Connected');
   
@@ -36,11 +31,7 @@ client.on('connect', () => {
   });
 });
 
-// Cuando llega un nuevo mensaje de MQTT
 client.on('message', (topic, payload) => {
-  const message = payload.toString();
-  console.log('Received MQTT Message:', topic, message);
-  
-  // Enviar el mensaje recibido de MQTT al servidor WebSocket
-  ws.send(message);
+  console.log('Received MQTT Message:', topic, payload.toString());
+  // Puedes añadir lógica aquí para enviar el mensaje a WebSocket
 });
