@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   sendButton.addEventListener('click', () => {
     const message = messageInput.value;
     if (message) {
-      ws.send(message);
+      ws.send(message); // Enviar mensaje como texto
       messageInput.value = '';
     }
   });
