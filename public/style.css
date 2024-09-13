@@ -1,0 +1,186 @@
+/* Modo oscuro */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #2a2a2a;
+  color: #e5e5e5;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+.container {
+  text-align: center;
+}
+
+.header {
+  background-color: #202020;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffffff;
+}
+
+/* Barra de estado */
+#status-bar {
+  background-color: #28a745; /* Verde cuando está conectado */
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#status-bar.disconnected {
+  background-color: #dc3545; /* Rojo cuando está desconectado */
+}
+
+/* Colaboradores */
+.footer {
+  padding: 20px;
+  background-color: #202020;
+  color: #ffffff;
+  text-align: center;
+}
+
+.collaborators-list a {
+  color: #0077b3; /* Azul para enlaces */
+}
+
+.messages {
+  height: 300px;
+  overflow-y: auto;
+  margin: 20px 0;
+  border: 1px solid #333;
+  padding: 10px;
+  background-color: #1e1e1e;
+  border-radius: 5px;
+}
+
+#message-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.message-content {
+  background-color: #3a3b3d;
+  padding: 10px;
+  border-radius: 5px;
+  color: #d1d1d1;
+}
+
+/* Estilo del input y botón */
+input[type="text"] {
+  padding: 10px;
+  width: 80%;
+  background-color: #3a3b3d;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border: 1px solid #0077b3;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #0077b3;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #005f99;
+  transform: scale(1.05);
+}
+
+.footer {
+  padding: 20px;
+  background-color: #202020;
+  color: #ffffff;
+  text-align: center;
+}
+
+.footer h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.collaborators-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.collaborators-list li {
+  margin-bottom: 5px;
+}
+
+.collaborators-list a {
+  color: #0077b3;
+  text-decoration: none;
+}
+
+.collaborators-list a:hover {
+  text-decoration: underline;
+}
+
+/* Modo claro */
+body.light-mode #status-bar {
+  background-color: #e0e0e0; /* Fondo claro para la barra de estado */
+  color: #333; /* Texto oscuro */
+}
+
+body.light-mode #status-bar.disconnected {
+  background-color: #f8d7da; /* Fondo claro para desconectado */
+  color: #721c24; /* Texto oscuro para desconectado */
+}
+
+body.light-mode .footer {
+  background-color: #f0f0f0; /* Fondo claro */
+  color: #333333; /* Texto oscuro */
+}
+
+body.light-mode .collaborators-list a {
+  color: #0056b3; /* Azul más oscuro para enlaces en modo claro */
+}
+
+/* Modo claro */
+body.light-mode {
+  background-color: #f4f4f4;
+  color: #1c1e21;
+}
+
+body.light-mode .container {
+  background-color: #ffffff;
+}
+
+body.light-mode .header {
+  background-color: #0077b3;
+}
+
+body.light-mode input[type="text"] {
+  background-color: #f0f0f0;
+  color: #1c1e21;
+}
