@@ -9,7 +9,7 @@ const wss = new WebSocket.Server({ server });
 
 // Configuración MQTT
 const protocol = 'mqtt';
-const host = '54.236.211.188';
+const host = '52.206.0.77';
 const port = '1883';
 const clientId = `mqtt_${Math.random().toString(16).slice(3)}`;
 const connectUrl = `${protocol}://${host}:${port}`;
