@@ -11,9 +11,9 @@ themeToggle.addEventListener('click', () => {
 });
 
 ws.onopen = () => {
-  statusBar.textContent = 'Connected to MQTT Broker';
-  statusBar.classList.remove('disconnected');
-  statusBar.classList.add('connected');
+  document.getElementById('status-bar').textContent = 'Connected to MQTT Broker';
+  document.getElementById('status-bar').classList.remove('disconnected');
+  document.getElementById('status-bar').classList.add('connected');
 };
 
 ws.onmessage = (event) => {
@@ -23,9 +23,9 @@ ws.onmessage = (event) => {
 };
 
 ws.onclose = () => {
-  statusBar.textContent = 'Disconnected from MQTT Broker';
-  statusBar.classList.remove('connected');
-  statusBar.classList.add('disconnected');
+  document.getElementById('status-bar').textContent = 'Disconnected from MQTT Broker';
+  document.getElementById('status-bar').classList.remove('connected');
+  document.getElementById('status-bar').classList.add('disconnected');
 };
 
 sendButton.addEventListener('click', () => {
