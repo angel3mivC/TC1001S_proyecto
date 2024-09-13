@@ -32,7 +32,7 @@ Necesitas tener instalado node.js
 
 4. Ve a `http://localhost:3000` para acceder al chat.
 
-## Aoftware utilizado
+## Software utilizado
 
 - MQTT
 - Express
