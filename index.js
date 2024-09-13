@@ -42,17 +42,17 @@ wss.on('connection', ws => {
   console.log('WebSocket connection established');
 
   ws.on('message', message => {
-    // Si el mensaje es un Buffer, conviértelo a string
-    if (Buffer.isBuffer(message)) {
-      message = message.toString();
-    }
-    console.log('Received from WebSocket client:', message);
+    // Asegurarse de que el mensaje sea una cadena
+    const messageString = (typeof message === 'string') ? message : message.toString();
+    
+    // Separar el identificador del mensaje
+    const [uniqueId, messageText] = messageString.split('|');
+    console.log('Received from WebSocket client:', messageText);
 
     if (!isPublishingFromWebSocket) {
       isPublishingFromWebSocket = true;
 
-      // Enviar el mensaje recibido al broker MQTT
-      mqttClient.publish(topic, message, { qos: 0, retain: false }, (error) => {
+      mqttClient.publish(topic, messageText, { qos: 0, retain: false }, (error) => {
         if (error) {
           console.error('MQTT Publish Error:', error);
         }
