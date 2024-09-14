@@ -1,18 +1,24 @@
+// Importacion de las librerias necesarias
 const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
 const mqtt = require('mqtt');
 
+//Instancia de Express 
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
-// Configuración MQTT
+// Configuración del cliente MQTT
 const protocol = 'mqtt';
 const host = '52.206.0.77';
 const port = '1883';
+// Creacion de un ID para el cliente MQTT
 const clientId = `mqtt_${Math.random().toString(16).slice(3)}`;
+// Construccion de la URL
 const connectUrl = `${protocol}://${host}:${port}`;
+
+//Conexion al broker con la configuracion hecha
 const mqttClient = mqtt.connect(connectUrl, {
   clientId,
   clean: true,
@@ -22,12 +28,13 @@ const mqttClient = mqtt.connect(connectUrl, {
   reconnectPeriod: 1000,
 });
 
+//Topico al se suscribira
 const topic = '/nodejs/mqtt';
 
 // Bandera para evitar eco
 let isPublishingFromWebSocket = false;
 
-// Enviar mensaje a todos los clientes conectados
+// Funcion para enviar mensaje a todos los clientes conectados
 function broadcastMessage(message) {
   wss.clients.forEach(client => {
     if (client.readyState === WebSocket.OPEN) {
@@ -37,22 +44,23 @@ function broadcastMessage(message) {
   });
 }
 
-// Configurar WebSocket
+// Configuracion de eventos para el WebSocket
 wss.on('connection', ws => {
   console.log('WebSocket connection established');
 
+  // Escucha los mensajes de los clientes
   ws.on('message', message => {
-    // Asegurarse de que el mensaje sea una cadena
-    const messageString = (typeof message === 'string') ? message : message.toString();
-    
-    // Separar el identificador del mensaje
-    const [uniqueId, messageText] = messageString.split('|');
+    const messageString = (typeof message === 'string') ? message : message.toString(); // Asegurarse de que el mensaje sea una cadena
+    const [uniqueId, messageText] = messageString.split('|'); // Separar el identificador del mensaje
     console.log('Received from WebSocket client:', messageText);
 
+    // Evita el eco mientras se publica en MQTT
     if (!isPublishingFromWebSocket) {
       isPublishingFromWebSocket = true;
 
+      // Publica el mensaje en el Broker
       mqttClient.publish(topic, messageText, { qos: 0, retain: false }, (error) => {
+        //Manejo de errores en la publicación
         if (error) {
           console.error('MQTT Publish Error:', error);
         }
@@ -61,18 +69,19 @@ wss.on('connection', ws => {
     }
   });
 
+  //Evento cuando se cierra la conexion WebSocket
   ws.on('close', () => {
     console.log('WebSocket connection closed');
   });
 });
 
-// Cuando llega un nuevo mensaje de MQTT
+// Escucha los mensajes entrantes en el broker
 mqttClient.on('message', (topic, payload) => {
   const message = payload.toString();
   console.log('Received MQTT Message:', topic, message);
 
+  // Si el mensaje no viene del WebSocket, lo envia a todos los clientes
   if (!isPublishingFromWebSocket) {
-    // Enviar el mensaje recibido de MQTT al servidor WebSocket
     broadcastMessage(message);
   }
 });
@@ -85,7 +94,7 @@ server.listen(3000, () => {
   console.log('Server is running on http://localhost:3000');
 });
 
-// Suscripción y Publicación en MQTT
+// Suscripción al topico y Publicación en MQTT
 mqttClient.on('connect', () => {
   console.log('MQTT Connected');
   mqttClient.subscribe([topic], () => {
