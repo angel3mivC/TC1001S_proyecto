@@ -16,7 +16,7 @@ Necesitas tener instalado node.js
 
 1. Clona este repositorio:
     ```bash
-    git clone https://github.com/usuario/TC1001S_proyecto
+    git clone https://github.com/angel3mivC/TC1001S_proyecto
     cd TC1001S_proyecto
     ```
 
